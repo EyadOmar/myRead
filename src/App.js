@@ -7,16 +7,20 @@ import NotFound from "./components/NotFound";
 import * as BooksApi from "./BooksAPI";
 
 function App() {
-  // const [showSearchPage, setShowSearchpage] = useState(false);
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
+    let mounted = true;
     const getBooks = async () => {
       const res = await BooksApi.getAll();
       setBooks(res);
     };
 
-    getBooks();
+    if (mounted) getBooks();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const updateShelf = async (book, shelf) => {
@@ -28,7 +32,7 @@ function App() {
   return (
     <div className="app">
       <Routes>
-        <Route path="/search" element={<Search />} />
+        <Route path="/search" element={<Search updateShelf={updateShelf} />} />
         <Route
           exact
           path="/"
