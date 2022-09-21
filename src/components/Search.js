@@ -1,8 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const Search = ({}) => {
+const Search = () => {
   return (
     <div className="search-books">
       <div className="search-books-bar">
@@ -20,6 +20,6 @@ const Search = ({}) => {
   );
 };
 
-Search.propTypes = {};
+// Search.propTypes = {};
 
 export default Search;
