@@ -23,16 +23,20 @@ function App() {
     };
   }, []);
 
-  const updateShelf = async (book, shelf) => {
-    await BooksApi.update(book, shelf);
-    const res = await BooksApi.getAll();
-    setBooks(res);
+  const updateShelf = (book, shelf) => {
+    book.shelf = shelf;
+    BooksApi.update(book, shelf).then(() => {
+      setBooks([...books.filter((b) => b.id !== book.id), book]);
+    });
   };
 
   return (
     <div className="app">
       <Routes>
-        <Route path="/search" element={<Search updateShelf={updateShelf} />} />
+        <Route
+          path="/search"
+          element={<Search books={books} updateShelf={updateShelf} />}
+        />
         <Route
           exact
           path="/"

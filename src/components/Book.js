@@ -2,6 +2,29 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Book = ({ book, updateShelf }) => {
+  const shelfs = [
+    {
+      id: 1,
+      shelfName: "currentlyReading",
+      shelfDisplayName: "Currently Reading",
+    },
+    {
+      id: 2,
+      shelfName: "wantToRead",
+      shelfDisplayName: "Want to Read",
+    },
+    {
+      id: 3,
+      shelfName: "read",
+      shelfDisplayName: "Read",
+    },
+    {
+      id: 4,
+      shelfName: "none",
+      shelfDisplayName: "None",
+    },
+  ];
+
   return (
     <li>
       <div className="book">
@@ -24,10 +47,11 @@ const Book = ({ book, updateShelf }) => {
               <option value="moveTo" disabled>
                 Move to...
               </option>
-              <option value="currentlyReading">Currently Reading</option>
-              <option value="wantToRead">Want to Read</option>
-              <option value="read">Read</option>
-              <option value="none">None</option>
+              {shelfs.map((shelf) => (
+                <option key={shelf.id} value={shelf.shelfName}>
+                  {shelf.shelfDisplayName}
+                </option>
+              ))}
             </select>
           </div>
         </div>

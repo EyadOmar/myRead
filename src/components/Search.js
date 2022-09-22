@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import Book from "./Book";
 
-const Search = ({ updateShelf }) => {
+const Search = ({ books, updateShelf }) => {
   const [query, setQuery] = useState("");
   const [searchBooks, setSearchBooks] = useState([]);
 
@@ -42,9 +42,20 @@ const Search = ({ updateShelf }) => {
       <div className="search-books-results">
         <ol className="books-grid">
           {searchBooks.length > 0 &&
-            searchBooks.map((book) => (
-              <Book key={book.id} book={book} updateShelf={updateShelf} />
-            ))}
+            searchBooks.map((searchBook) => {
+              const matchedBook = books.find(
+                (homeBook) => homeBook.id === searchBook.id
+              );
+              if (matchedBook) searchBook.shelf = matchedBook.shelf;
+              else searchBook.shelf = "none";
+              return (
+                <Book
+                  key={searchBook.id}
+                  book={searchBook}
+                  updateShelf={updateShelf}
+                />
+              );
+            })}
         </ol>
       </div>
     </div>
@@ -52,6 +63,7 @@ const Search = ({ updateShelf }) => {
 };
 
 Search.propTypes = {
+  books: PropTypes.array.isRequired,
   updateShelf: PropTypes.func.isRequired,
 };
 
